@@ -1,0 +1,30 @@
+version: '3.5'
+
+services:
+  app:
+    build: .
+    user: ${UID}:${GID}
+    image: test-image
+    volumes:
+      - ./app:/app
+      - /etc/group:/etc/group:ro
+      - /etc/passwd:/etc/passwd:ro
+    env_file:
+      - .env
+    network_mode: host
+    container_name: test-container
+    tty: true
+    stdin_open: true
+
+#   db:
+#     image: mariadb
+#     ports:
+#       - 43306:3306
+#     volumes:
+#       - db_data:/var/lib/mysql
+#     container_name: test-db
+#     env_file:
+#       - .env
+
+# volumes:
+#   db_data:

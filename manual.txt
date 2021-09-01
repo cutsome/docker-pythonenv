@@ -1,0 +1,81 @@
+# ---------------------------------------
+# docker コマンドを使う場合
+#
+# 基本
+#
+# 1. Dockerfile ➔ image & ドットは、Dockerfile のある階層を示す。
+# $(ホスト内) docker build -t <image name> .
+#
+# 2. image ➔ container 作成 & シェルを起動する。
+# $(ホスト内) docker run -it --name <container name> <image name> bash
+#
+# ex: docker run -it --name sf_container --network host \
+#        --env-file $(pwd)/.env -v $(pwd):/api sf_img
+#
+#     <container name> ➔ <container id> でもOK
+#     <image name>     ➔ <image id>     でもOK
+#
+# 3. container から抜ける。（プロセスをキルしない。）
+# $(コンテナ内) control + p + q
+#
+# 4. container に入る。
+# $(ホスト内) docker attach <container name>
+#
+# 5. コンテナのプロセスを確認する
+# $(ホスト内) docker ps
+# $(ホスト内) docker ps -a  (停止中コンテナも含めて)
+#
+# 応用
+#
+# container から抜ける。（プロセスをキルする。）
+# $(コンテナ内) exit
+#
+# 停止している docker container を再起動する。
+# $(ホスト内) docker restart <container name>
+#
+# コンテナ
+# $(ホスト内) docker exec -it <container name> bash
+#
+# コンテナ停止
+# $(ホスト内) docker stop <container name>
+# 
+#
+# ---------------------------------------
+# docker-compose コマンドを使う場合
+#
+# ** docker-compose.yml と同階層でしか実行できない。 **
+#
+# ビルド + コンテナ起動
+# docker-compose up -d
+#
+# 強制ビルド + コンテナ起動
+# docker-compsoe up --build -d
+#
+# コンテナ停止 (削除まで含む)
+# docker-compose down
+#
+# コンテナ停止 (削除しない)
+# docker-compose stop
+#
+# コンテナ起動
+# docker-compose start
+#
+# コンテナ再起動 (停止 + 起動)
+# docker-compose restart
+#
+# コンテナ内でコマンド実行
+# docker-compose exec <service> <command>
+# ex: docker-compose exec web python app.py
+#
+# コンテナに入る場合
+# docker-compose exec <service> bash
+#
+# コンテナの起動プロセス確認
+# docker-compose ps
+#
+# cpuリソースに制限をかける場合
+# docker-compose --compatibility up -d
+#  https://qiita.com/KEINOS/items/df3474624efec3da539f
+#
+# cpuリソースに制限をかける場合 (Dockerfile変更時)
+# docker-compose --compatibility up --build -d
